@@ -5,7 +5,7 @@
     ports:
       - "3306:3306"
     volumes:
-      - jengo_django_db_data:/var/lib/mysql
+      - jengo_django_mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: changeme
       MYSQL_DATABASE: jengo_django
@@ -13,3 +13,5 @@
       MYSQL_PASSWORD: changeme
     labels:
       - "com.joped.jengo_django.description=jengo Django MySQL"
+volumes:
+  jengo_django_mysql_data:

@@ -5,10 +5,12 @@
     ports:
       - "3306:3306"
     volumes:
-      - jengo_django_db_data:/var/lib/postgresql/data
+      - jengo_django_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: jengo_django
       POSTGRES_USER: jengo_django
       POSTGRES_PASSWORD: changeme
     labels:
       - "com.joped.jengo_django.description=jengo Django PostgreSQL"
+volumes:
+  jengo_django_postgres_data:

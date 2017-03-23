@@ -3,9 +3,6 @@ version: '3'
 networks:
   jengo_django:
 
-volumes:
-  jengo_django_db_data:
-
 services:
   django:
     build: .
