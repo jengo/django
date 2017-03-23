@@ -1,0 +1,16 @@
+version: '3'
+services:
+  jengo_django_build:
+    build:
+      context: .
+      args:
+        - PROJECT
+        - DATABASE_TYPE
+    # Allows running container in dev mode, which loads using bash instead of manage.py
+    # Exceptions during development won't require rebuilding the containers
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./build:/usr/src/app
+    environment:
+      - PROJECT
