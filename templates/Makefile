@@ -11,6 +11,7 @@ dev:
 	docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --build -d --remove-orphans
 
 run:
+	yes "yes" | python manage.py migrate
 	python manage.py runserver 0.0.0.0:8000
 
 shell:

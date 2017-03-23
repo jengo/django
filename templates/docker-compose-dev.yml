@@ -27,3 +27,4 @@ services:
     tty: true
     depends_on:
       - db
+    command: 'bash'

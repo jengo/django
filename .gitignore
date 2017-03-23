@@ -1,1 +1,3 @@
 build
+# Don't store credentials in git!
+.env

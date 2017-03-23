@@ -9,6 +9,7 @@ volumes:
 services:
   django:
     build: .
+    env_file: .env
     networks:
       - jengo_django
     ports:

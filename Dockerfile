@@ -36,10 +36,16 @@ RUN python manage.py startapp homepage
 # 	&& cat /usr/src/templates/Makefile >> Makefile
 
 # MySQL setup
-RUN if [ "$DATABASE_TYPE" = "mysql" ]; then cat /usr/src/templates/docker-compose.yml /usr/src/templates/docker-compose-part-mysql.yml > /tmp/build/docker-compose.yml; fi
+RUN if [ "$DATABASE_TYPE" = "mysql" ]; then \
+	cat /usr/src/templates/docker-compose.yml /usr/src/templates/docker-compose-part-mysql.yml > /tmp/build/docker-compose.yml; \
+	fi
 
 # PostgreSQL setup
 RUN if [ "$DATABASE_TYPE" = "postgres" ]; then cat /usr/src/templates/docker-compose.yml /usr/src/templates/docker-compose-part-postgres.yml > /tmp/build/docker-compose.yml; fi
 
+RUN cp /usr/src/templates/settings.py /tmp/build/${PROJECT} \
+	&& printf "\n\nROOT_URLCONF = '${PROJECT}.urls'\n" >> /tmp/build/${PROJECT}/settings.py \
+	&& printf "WSGI_APPLICATION = '${PROJECT}.wsgi.application'\n" >> /tmp/build/${PROJECT}/settings.py \
+	&& printf "SECRET_KEY = '$(openssl rand  -base64 40)'\n" >> /tmp/build/${PROJECT}/settings.py
 
 CMD ["bash"]

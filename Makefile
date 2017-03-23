@@ -20,6 +20,7 @@ depends:
 	mkdir -p build
 	PROJECT=${PROJECT} DATABASE_TYPE=${DATABASE_TYPE} docker-compose up --build -d --remove-orphans 
 	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /usr/src/app'
+	cp templates/env_${DATABASE_TYPE} build/.env
 # Don't do this inside the container because we want the commit to come from the user who created it
 # The host -should- have git properly setup
 	cd build && git init && git add * && git commit -m 'initial import from jengo django'
