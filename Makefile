@@ -13,16 +13,26 @@ all: clean depends test
 clean:
 # If they aren't found, don't error out
 	-docker-compose rm -f
+# TODO! Throw an error if the build has already been created.  This will help prevent accidents
+	rm -fr build
 
 depends:
 	mkdir -p build
-	PROJECT=${PROJECT} docker-compose up --build -d --remove-orphans
-	docker-compose exec jengo_django_build sh -c 'cp -r /tmp/build/* /usr/src/app'
+	PROJECT=${PROJECT} DATABASE_TYPE=${DATABASE_TYPE} docker-compose up --build -d --remove-orphans 
+	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /usr/src/app'
+# Don't do this inside the container because we want the commit to come from the user who created it
+# The host -should- have git properly setup
+	cd build && git init && git add * && git commit -m 'initial import from jengo django'
+# Now build the newly created project
+	cd build && make
+# Clean up the temp build container
+	-docker-compose stop
+	-docker-compose rm -f
 
 shell:
 # Use exec so we are connecting to the exact container running
 # Useful for checking things like the contents of /tmp
-	docker-compose exec jengo_django_build bash
+	docker-compose exec buildtmp bash
 
 test:
 	echo "not implemented"

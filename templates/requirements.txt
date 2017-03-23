@@ -1,0 +1,16 @@
+django==1.10.5
+# You can later remove the database you are not using
+# I wanted to keep the flow simple and not add unnecessary logic
+django_mysql==1.1.0
+django-postgresql==0.0.3
+django_nose==1.4.4
+arrow==0.10.0
+pytest==3.0.6
+pytest-cov==2.4.0
+coverage2clover==1.2.0
+pylint==1.6.5
+pyvalid==0.9
+pytest-benchmark==3.0.0
+requests==2.13.0
+django-simple-history==1.8.2
+django-mako-plus==3.8.11

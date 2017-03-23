@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  jengo_django:
+
+volumes:
+  jengo_django_db_data:
+
+services:
+  django:
+    build: .
+    networks:
+      - jengo_django
+    ports:
+      - "8000:8000"
+    # Allows running container in dev mode, which loads using bash instead of manage.py
+    # Exceptions during development won't require rebuilding the containers
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+  # Build nginx instead of just running, less sloppy way to generate a self signed cert
+  nginx:
+    networks:
+      - jengo_django
+    build: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    labels:
+      - "com.joped.jengo_django.description=jengo Django nginx"
+    links:
+      - django
+    restart: always
