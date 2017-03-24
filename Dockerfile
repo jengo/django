@@ -15,8 +15,8 @@ ADD templates /usr/src/templates
 ARG PROJECT
 ARG DATABASE_TYPE
 
-ENV PROJECT ${PROJECT}
-ENV DATABASE_TYPE ${DATABASE_TYPE}
+ENV PROJECT=${PROJECT} \
+	DATABASE_TYPE=${DATABASE_TYPE}
 
 RUN mkdir /tmp/build \
 	&& django-admin startproject ${PROJECT} /tmp/build 
@@ -25,6 +25,7 @@ ADD templates/Makefile /tmp/build/Makefile
 ADD templates/requirements.txt /tmp/build/requirements.txt
 ADD templates/nginx /tmp/build/nginx
 ADD templates/Dockerfile /tmp/build/Dockerfile
+ADD templates/README.md /tmp/build/README.md
 ADD templates/docker-compose-dev.yml /tmp/build/docker-compose-dev.yml
 
 # If you set the destination directory manage.py complain that it doesn't exist
