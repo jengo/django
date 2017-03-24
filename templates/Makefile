@@ -9,6 +9,8 @@ depends:
 
 dev:
 	docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --build -d --remove-orphans
+# Connect to the container after rebuild
+	make shell
 
 run:
 	yes "yes" | python manage.py migrate
