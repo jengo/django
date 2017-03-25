@@ -35,7 +35,7 @@ depends:
 	cp templates/gitignore build/.gitignore
 # Don't do this inside the container because we want the commit to come from the user who created it
 # The host -should- have git properly setup
-	cd build && git init && git add * && git add .gitignore && git commit -m 'initial import from jengo django'
+	cd build && git init && git add * && git add .gitignore && git add .env && git commit -m 'initial import from jengo django'
 # Now build the newly created project
 	cd build && make
 # Clean up the temp build container
