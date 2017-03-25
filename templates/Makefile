@@ -13,6 +13,10 @@ clean:
 depends:
 	docker-compose up --build -d --remove-orphans
 
+deploy:
+# This is where you will add commands to push to your docker registry
+	echo "deploy not implemented"
+
 dev:
 	docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
 # Connect to the container after rebuild

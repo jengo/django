@@ -19,5 +19,7 @@ tests/report/
 
 # Added by jengo django
 
+# !!! Do not check this file into git!  Out of the box jengo django will add it only because it should have functioning CI examples
+# !!! It's strongly recommended that you uncomment this line!
 # Don't store credentials in git!
-.env
+#.env

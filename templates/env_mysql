@@ -1,3 +1,5 @@
+# !!! Do not check this file into git!  Out of the box jengo django will add it only because it should have functioning CI examples
+
 DB_ENGINE=django.db.backends.mysql
 DB_HOST=db
 DB_PORT=3306
