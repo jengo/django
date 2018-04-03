@@ -1,4 +1,4 @@
-django==2.0.3
+django==2.0.4
 # You can later remove the database you are not using
 # I wanted to keep the flow simple and not add unnecessary logic
 django-mysql==2.2.0
