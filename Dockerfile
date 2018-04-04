@@ -27,6 +27,7 @@ ADD templates/nginx /tmp/build/nginx
 ADD templates/Dockerfile /tmp/build/Dockerfile
 ADD templates/README.md /tmp/build/README.md
 ADD templates/docker-compose-dev.yml /tmp/build/docker-compose-dev.yml
+ADD templates/Jenkinsfile /tmp/build/Jenkinsfile
 
 # If you set the destination directory manage.py complain that it doesn't exist
 # If you create the destination directory manage.py complains it's a duplicate
