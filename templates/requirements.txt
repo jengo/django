@@ -2,7 +2,7 @@ django==2.1.5
 # You can later remove the database you are not using
 # I wanted to keep the flow simple and not add unnecessary logic
 django-mysql==2.4.1
-mysqlclient==1.4.1
+mysqlclient==1.4.2
 django-postgresql==0.0.3
 psycopg2
 django-nose==1.4.6
