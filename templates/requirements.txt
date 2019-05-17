@@ -1,7 +1,7 @@
 django==2.2.1
 # You can later remove the database you are not using
 # I wanted to keep the flow simple and not add unnecessary logic
-django-mysql==3.0.0.post1
+django-mysql==3.1.0
 mysqlclient==1.4.2.post1
 django-postgresql==0.0.3
 psycopg2
