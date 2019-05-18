@@ -6,7 +6,7 @@ mysqlclient==1.4.2.post1
 django-postgresql==0.0.3
 psycopg2
 django-nose==1.4.6
-arrow==0.13.1
+arrow==0.13.2
 pytest==4.5.0
 pytest-cov==2.7.1
 coverage2clover==1.4.0
