@@ -7,7 +7,7 @@ django-postgresql==0.0.3
 psycopg2
 django-nose==1.4.6
 arrow==0.14.5
-pytest==5.0.1
+pytest==5.1.0
 pytest-cov==2.7.1
 coverage2clover==1.4.0
 pylint==2.3.1
