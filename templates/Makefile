@@ -12,8 +12,8 @@ COMPOSE_BUILD_OPT?=
 # Commonly developers have a webserver and db already running locally
 MYSQL_PORT?=3306
 POSTGRES_PORT?=5432
-NGINX_HTTP_PORT?=80
-NGINX_HTTPS_PORT?=443
+NGINX_HTTP_PORT?=80:80
+NGINX_HTTPS_PORT?=443:443
 
 clean:
 # If they aren't found, don't error out
@@ -32,6 +32,9 @@ dev:
 	make shell
 
 run:
+# If the DB host is not ready, migrate will fail
+# TODO: make run needs to be replaced with a proper entrypoint.sh
+	scripts/wait-for-it.sh -h ${DB_HOST} -p ${DB_PORT}
 	yes "yes" | python manage.py migrate
 	python manage.py runserver 0.0.0.0:8000
 
