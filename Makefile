@@ -1,3 +1,5 @@
+.EXPORT_ALL_VARIABLES:
+
 # Notes on how this will work:
 # - Directory named templates will contain all template files, including Makefile which will be used later
 # - jengo_django has a Makefile which is only about creating the project.  The Makefile in the templates directory is for the project it self
@@ -5,16 +7,16 @@
 # - Build container with volume linked to build/$PROJECT and templates directory. That container will be used to setup all the required files.
 # - Once build is complete, temp build container is destoryed and new project is brought up in dev mode.
 
-PROJECT ?= "jengo_django"
-DATABASE_TYPE ?= "mysql"
+PROJECT?=jengo_django
+DATABASE_TYPE?=mysql
 # Set this value if you want to push the sample code to an origin
 # Jolene will be using this to test CI for the boilerplate output
-SAMPLE_ORIGIN ?= "git@github.com:jengo/django-sampleoutput.git"
+SAMPLE_ORIGIN?=git@github.com:jengo/django-sampleoutput.git
 
 # Sometimes rebuilds of a project can cause lingering layers which really mess things up
 # But not using cache can also slow down development
 # You can turn caching back on by using COMPOSE_BUILD_OPT= make
-COMPOSE_BUILD_OPT ?= "--force-recreate"
+COMPOSE_BUILD_OPT?=--force-recreate
 
 all: clean depends test
 
@@ -26,7 +28,7 @@ clean:
 
 depends:
 	mkdir -p build
-	PROJECT=${PROJECT} DATABASE_TYPE=${DATABASE_TYPE} docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
 	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /usr/src/app'
 	docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /usr/src/app'
 	# cp templates/env_${DATABASE_TYPE} build/.env
@@ -44,7 +46,7 @@ depends:
 
 sample:
 # Generate the sample output application that will appear at https://github.com/jengo/django-sampleoutput
-	PROJECT=jengo_django_sampleoutput DATABASE_TYPE=${DATABASE_TYPE} SAMPLE_ORIGIN=${SAMPLE_ORIGIN} make
+	make
 # Using a force push, no reason to deal with conflicts it's just a sample and for testing CI
 	cd build && git remote add origin ${SAMPLE_ORIGIN} && git push origin master -f
 

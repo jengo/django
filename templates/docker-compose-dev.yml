@@ -15,7 +15,7 @@ version: '3'
 services:
   django:
     build: .
-    env_file: env
+    env_file: .env
     networks:
       - jengo_django
     ports:
