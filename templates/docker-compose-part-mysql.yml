@@ -1,17 +1,18 @@
   db:
-    image: mysql
+    # Ran into an SSL bug using latest tag, rolling back to 5.7 which works
+    # TODO: Troubleshoot
+    image: mysql:5.7
+    env_file: .env
     networks:
       - jengo_django
     ports:
       - "${MYSQL_PORT}"
     volumes:
-      - jengo_django_mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: changeme
-      MYSQL_DATABASE: jengo_django
-      MYSQL_USER: jengo_django
-      MYSQL_PASSWORD: changeme
-    labels:
-      - "com.joped.jengo_django.description=jengo Django MySQL"
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
 volumes:
-  jengo_django_mysql_data:
+  mysql_data:

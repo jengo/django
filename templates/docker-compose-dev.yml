@@ -18,8 +18,6 @@ services:
     env_file: .env
     networks:
       - jengo_django
-    ports:
-      - "8000"
     volumes:
       - .:/usr/src/app
     # Allows running container in dev mode, which loads using bash instead of manage.py

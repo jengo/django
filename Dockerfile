@@ -28,6 +28,7 @@ ADD templates/Dockerfile /tmp/build/Dockerfile
 ADD templates/README.md /tmp/build/README.md
 ADD templates/docker-compose-dev.yml /tmp/build/docker-compose-dev.yml
 ADD templates/Jenkinsfile /tmp/build/Jenkinsfile
+ADD scripts/wait-for-it.sh /tmp/build/scripts/wait-for-it.sh
 ADD scripts /tmp/scripts
 
 # If you set the destination directory manage.py complain that it doesn't exist

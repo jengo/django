@@ -9,8 +9,6 @@ services:
     env_file: .env
     networks:
       - jengo_django
-    ports:
-      - "8000:8000"
     # Allows running container in dev mode, which loads using bash instead of manage.py
     # Exceptions during development won't require rebuilding the containers
     stdin_open: true
@@ -22,11 +20,10 @@ services:
     networks:
       - jengo_django
     build: nginx
+    env_file: .env
     ports:
-      - "${NGINX_HTTP_PORT}:80"
-      - "${NGINX_HTTPS_PORT}:443"
-    labels:
-      - "com.joped.jengo_django.description=jengo Django nginx"
+      - "${NGINX_HTTP_PORT}"
+      - "${NGINX_HTTPS_PORT}"
     links:
       - django
     restart: always
