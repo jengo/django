@@ -3,7 +3,7 @@
     networks:
       - jengo_django
     ports:
-      - "3306:3306"
+      - "${POSTGRES_PORT}"
     volumes:
       - jengo_django_postgres_data:/var/lib/postgresql/data
     environment:

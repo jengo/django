@@ -1,8 +1,6 @@
 # jengo django
 Jolene Engo's (jengo) simple django boiler plate with docker
 
-*This is currently an incomplete experimental project, not recommended for use!*
-
 This is a set of tools to create a boiler plate django project and app using Docker containers.  This will also create all the required files to setup the containers for your project.  This includes a database container, MySQL and PostgreSQL (future).  This is a total rewrite of my previous version that didn't use Docker compose.
 
 
