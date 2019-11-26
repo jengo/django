@@ -2,16 +2,16 @@ FROM python:3.7
 
 EXPOSE 8000
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-ADD requirements.txt /usr/src/app
+ADD requirements.txt /app
 
 RUN pip install --upgrade pip \
-	&& pip install --no-cache-dir -r /usr/src/app/requirements.txt
+	&& pip install --no-cache-dir -r /app/requirements.txt
 
-ADD . /usr/src/app
+ADD . /app
 
 # USER www-data
 
-# Why use make ?  It's a wrapper to add post container start commands like db migration
-CMD ["make","run"]
+ENTRYPOINT ["/app/scripts/entrypoint.sh"]
+CMD ["python", "manage.py"," runserver"]

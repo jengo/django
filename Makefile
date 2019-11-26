@@ -7,7 +7,7 @@
 # - Build container with volume linked to build/$PROJECT and templates directory. That container will be used to setup all the required files.
 # - Once build is complete, temp build container is destoryed and new project is brought up in dev mode.
 
-PROJECT?=jengo_django
+PROJECT?=jengo_django_sampleoutput
 DATABASE_TYPE?=mysql
 # Set this value if you want to push the sample code to an origin
 # Jolene will be using this to test CI for the boilerplate output
@@ -22,15 +22,23 @@ all: clean depends test
 
 clean:
 # If they aren't found, don't error out
+	-docker-compose stop
 	-docker-compose rm -f
 # TODO! Throw an error if the build has already been created.  This will help prevent accidents
 	rm -fr build
 
 depends:
+	mkdir build
+	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	docker-compose exec buildtmp sh -c 'scripts/create.sh'
+
+# TODO! REMOVE
+depends_org:
 	mkdir -p build
 	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
-	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /usr/src/app'
-	docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /usr/src/app'
+	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /app'
+	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /app'
+	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.dockerignore /app'
 	# cp templates/env_${DATABASE_TYPE} build/.env
 # Name is different because it should NOT be used for the repo it self
 # It's only a template

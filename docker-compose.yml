@@ -11,6 +11,6 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./build:/usr/src/app
+      - .:/jengo_django
     environment:
       - PROJECT

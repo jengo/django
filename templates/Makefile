@@ -2,6 +2,8 @@
 
 all: clean depends test
 
+PROJECT=jengo_django_sampleoutput
+
 # Sometimes rebuilds of a project can cause lingering layers which really mess things up
 # But not using cache can also slow down development
 # You can turn caching back off caching by using COMPOSE_BUILD_OPT="--force-recreate" make

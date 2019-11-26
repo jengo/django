@@ -13,6 +13,9 @@ services:
     # Exceptions during development won't require rebuilding the containers
     stdin_open: true
     tty: true
+    volumes:
+      # For running unit tests
+      - .git:/app/.git
     depends_on:
       - db
   # Build nginx instead of just running, less sloppy way to generate a self signed cert
