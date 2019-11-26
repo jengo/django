@@ -11,7 +11,10 @@ RUN pip install --upgrade pip \
 
 ADD . /app
 
+# TODO: Don't run as root, this will be fixed when sample unit tests are added
 # USER www-data
 
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
-CMD ["python", "manage.py"," runserver"]
+
+# NOTE: You will need to modify the number of workers for your environment
+CMD ["gunicorn", "jengo_django_sampleoutput.wsgi", "-b", "0.0.0.0", "-w", "4"]

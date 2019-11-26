@@ -11,7 +11,7 @@ set -ex
 
 # Start fresh, yes ... this will delete local host files
 # TODO: Add protection in top level Makefile
-rm -fr /app
+rm -fr /app/*
 mkdir -p /app/scripts
 django-admin startproject ${PROJECT} /app
 

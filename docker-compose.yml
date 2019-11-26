@@ -12,5 +12,6 @@ services:
     tty: true
     volumes:
       - .:/jengo_django
+      - ./build:/app
     environment:
       - PROJECT

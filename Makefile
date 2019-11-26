@@ -24,13 +24,16 @@ clean:
 # If they aren't found, don't error out
 	-docker-compose stop
 	-docker-compose rm -f
-# TODO! Throw an error if the build has already been created.  This will help prevent accidents
-	rm -fr build
+# If there was a previous build, stop those containers as well
+	-cd build && docker-compose stop
+	-cd build && docker-compose rm -f
 
 depends:
-	mkdir build
+	mkdir -p build
 	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
 	docker-compose exec buildtmp sh -c 'scripts/create.sh'
+	# docker-compose stop
+	cd build && make
 
 # TODO! REMOVE
 depends_org:
@@ -65,5 +68,5 @@ shell:
 	docker-compose exec buildtmp bash
 
 test:
-	echo "not implemented"
+	scripts/test.sh
 
