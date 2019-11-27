@@ -21,6 +21,12 @@ clean:
 # If they aren't found, don't error out
 	-docker-compose rm -f
 
+include .env
+create_admin:
+	docker-compose exec django python manage.py shell -c \
+	 	"from django.contrib.auth import get_user_model; User = get_user_model(); \
+		 User.objects.create_superuser('${DJANGO_ADMIN_USER}', 'admin@example.com', '${DJANGO_ADMIN_PASSWORD}')"
+
 depends:
 	docker-compose up --build -d --remove-orphans
 

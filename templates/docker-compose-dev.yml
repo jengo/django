@@ -20,6 +20,7 @@ services:
       - jengo_django
     volumes:
       - .:/app
+      - static:/static
     # Allows running container in dev mode, which loads using bash instead of manage.py
     # Exceptions during development won't require rebuilding the containers
     stdin_open: true

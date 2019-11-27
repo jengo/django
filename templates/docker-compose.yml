@@ -16,6 +16,19 @@ services:
     volumes:
       # For running unit tests
       - .git:/app/.git
+      - static:/static
+    depends_on:
+      - db
+  # Intended for local dev
+  # Supports multiple database types unlike pgAdmin or phpMyAdmin
+  # Possible TODO would be to add this as a configurable option ?
+  adminer:
+    image: adminer
+    networks:
+      - jengo_django
+    restart: always
+    ports:
+      - 8080:8080
     depends_on:
       - db
   # Build nginx instead of just running, less sloppy way to generate a self signed cert
@@ -27,6 +40,8 @@ services:
     ports:
       - "${NGINX_HTTP_PORT}"
       - "${NGINX_HTTPS_PORT}"
+    volumes:
+      - static:/static
     links:
       - django
     restart: always

@@ -22,6 +22,7 @@ cp -r templates/Makefile templates/requirements.txt templates/nginx templates/Do
 cp templates/dockerignore /app/.dockerignore
 cp scripts/wait-for-it.sh /app/scripts/wait-for-it.sh
 cp scripts/entrypoint.sh /app/scripts/entrypoint.sh
+cp scripts/run*.sh /app/scripts/
 
 cd /app
 python manage.py startapp homepage
@@ -41,6 +42,7 @@ if [ "$DATABASE_TYPE" = "postgres" ]; then
 fi
 
 cp templates/env_${DATABASE_TYPE} /app/.env
+printf "\nSTATIC_ROOT=\"/static\"\n" >> /app/${PROJECT}/settings.py
 sed -i 's/SECRET_KEY.*/SECRET_KEY = os.environ.get("SECRET_KEY")/' /app/${PROJECT}/settings.py
 scripts/update_settings.py -f /app/${PROJECT}/settings.py
 printf "SECRET_KEY=$(openssl rand  -base64 40)\n\n" >> /app/.env

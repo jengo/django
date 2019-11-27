@@ -13,3 +13,4 @@
       POSTGRES_PASSWORD: changeme
 volumes:
   postgres_data:
+  static:

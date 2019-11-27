@@ -7,7 +7,10 @@ WORKDIR /app
 ADD requirements.txt /app
 
 RUN pip install --upgrade pip \
-	&& pip install --no-cache-dir -r /app/requirements.txt
+	&& pip install --no-cache-dir -r /app/requirements.txt \
+	&& apt-get update \
+	&& apt-get install -y nginx \
+	&& rm -fr /var/lib/apt/lists
 
 ADD . /app
 
@@ -17,4 +20,4 @@ ADD . /app
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 
 # NOTE: You will need to modify the number of workers for your environment
-CMD ["gunicorn", "jengo_django_sampleoutput.wsgi", "-b", "0.0.0.0", "-w", "4"]
+CMD ["scripts/run-copy-assets.sh"]
