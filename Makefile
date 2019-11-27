@@ -70,3 +70,14 @@ shell:
 test:
 	scripts/test.sh
 
+# This will be used by CI to update the example repo
+# Replace the initialized .git with django-sampleoutput/.git
+update_sample_repo:
+	rm -fr /tmp/django-sampleoutput/
+	cd /tmp && git clone git@github.com:jengo/django-sampleoutput.git
+	rm -fr build/.git
+	mv /tmp/django-sampleoutput/.git build
+# TODO: Once I add a version number, set it in the message
+# TODO: In CI, use the same branch name
+	cd build && git add -A \
+		&& git commit -m '[updated] To newest version'
