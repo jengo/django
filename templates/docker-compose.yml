@@ -24,6 +24,9 @@ services:
   # Possible TODO would be to add this as a configurable option ?
   adminer:
     image: adminer
+    environment:
+      ADMINER_DESIGN: pepa-linha
+      ADMINER_DEFAULT_SERVER: db
     networks:
       - jengo_django
     restart: always

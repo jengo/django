@@ -25,11 +25,14 @@ cp scripts/entrypoint.sh /app/scripts/entrypoint.sh
 cp scripts/run*.sh /app/scripts/
 
 cd /app
-python manage.py startapp homepage
+python manage.py startapp welcome
 python manage.py startapp healthz
 sed -i "s/PROJECT=jengo_django_sampleoutput/TEST=${PROJECT}/" /app/Makefile
 
 cd /jengo_django
+
+cp templates/healthz/views.py templates/healthz/urls.py /app/healthz/
+cp templates/welcome/views.py templates/welcome/urls.py /app/welcome/
 
 # MySQL setup
 if [ "$DATABASE_TYPE" = "mysql" ]; then
@@ -44,5 +47,8 @@ fi
 cp templates/env_${DATABASE_TYPE} /app/.env
 printf "\nSTATIC_ROOT=\"/static\"\n" >> /app/${PROJECT}/settings.py
 sed -i 's/SECRET_KEY.*/SECRET_KEY = os.environ.get("SECRET_KEY")/' /app/${PROJECT}/settings.py
+# Add route for healthz
+sed -i "s/]/    path\('healthz', include('healthz.urls')),\n    path\('', include('welcome.urls')), \n]/" /app/${PROJECT}/urls.py
+sed -i 's/from django.urls import path/from django.urls import path,include/' /app/${PROJECT}/urls.py
 scripts/update_settings.py -f /app/${PROJECT}/settings.py
 printf "SECRET_KEY=$(openssl rand  -base64 40)\n\n" >> /app/.env
