@@ -80,4 +80,5 @@ update_sample_repo:
 # TODO: Once I add a version number, set it in the message
 # TODO: In CI, use the same branch name
 	cd build && git add -A \
-		&& git commit -m '[updated] To newest version'
+		&& git commit -m '[updated] To newest version' \
+		&& git push

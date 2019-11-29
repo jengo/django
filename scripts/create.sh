@@ -20,6 +20,7 @@ cp -r templates/Makefile templates/requirements.txt templates/nginx templates/Do
 	templates/README.md templates/docker-compose-dev.yml templates/Jenkinsfile /app
 
 cp templates/dockerignore /app/.dockerignore
+cp templates/gitignore /app/.gitignore
 cp scripts/wait-for-it.sh /app/scripts/wait-for-it.sh
 cp scripts/entrypoint.sh /app/scripts/entrypoint.sh
 cp scripts/run*.sh /app/scripts/
