@@ -14,6 +14,9 @@
 # - Migrations with etcd
 
 FAILED=0
+RED=`tput setaf 1`
+GREEN=`tput setaf 2`
+RESET=`tput sgr0`
 
 # Silly workaround to let the containers finish loading
 sleep 5
@@ -66,8 +69,10 @@ if test $statuscode -ne 200; then
 	((FAILED++))
 fi
 
-printf "\n\n$FAILED tests failed\n"
 
 if test $FAILED -ne 0; then
+	printf "${RED}\n\n⛔️ Total tests failed: $FAILED!\n${RESET}"
 	exit -1
+else
+	printf "${GREEN}\n\n🎉 All tests successful!\n${RESET}"
 fi
