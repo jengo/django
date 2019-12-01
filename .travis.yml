@@ -1,6 +1,11 @@
 services:
   - docker
 
+jobs:
+  include:
+    - env: DATABASE_TYPE=mysql
+    - env: DATABASE_TYPE=postgres
+
 script:
   make
 
