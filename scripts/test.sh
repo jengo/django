@@ -24,6 +24,17 @@ sleep 5
 cd build
 expected_containers=( django db nginx adminer )
 
+https_check()
+{
+	path=$1
+	statuscode=$( curl -k --silent --output /dev/null --write-out "%{http_code}" --max-time 3 --retry 3 --retry-delay 2 --retry-max-time 30 https://localhost${path} )
+	if test $statuscode -ne 200; then
+		echo "Incorrect status code for HTTPS path=${path}, expected 200 got $statuscode"
+
+		((FAILED++))
+	fi
+}
+
 # Verify all expected containers are running
 for container in "${expected_containers[@]}"
 do
@@ -44,30 +55,10 @@ if test $statuscode -ne 301; then
 	((FAILED++))
 fi
 
-# HTTPS - /
-statuscode=$( curl -k --silent --output /dev/null --write-out "%{http_code}" --max-time 1 https://localhost/ )
-if test $statuscode -ne 200; then
-	echo "Incorrect status code for HTTPS path=/, expected 200 got $statuscode"
-
-	((FAILED++))
-fi
-
-# HTTPS - /healthz
-statuscode=$( curl -k --silent --output /dev/null --write-out "%{http_code}" --max-time 1 https://localhost/healthz )
-if test $statuscode -ne 200; then
-	echo "Incorrect status code for HTTPS path=/healthz, expected 200 got $statuscode"
-
-	((FAILED++))
-fi
-
-# HTTPS - /static/admin/css/base.css
+https_check "/"
+https_check "/healthz"
 # Verify the django admin CSS is operating as expected
-statuscode=$( curl -k --silent --output /dev/null --write-out "%{http_code}" --max-time 1 https://localhost/static/admin/css/base.css )
-if test $statuscode -ne 200; then
-	echo "Incorrect status code for HTTPS path=/static/admin/css/base.css, expected 200 got $statuscode"
-
-	((FAILED++))
-fi
+https_check "/static/admin/css/base.css"
 
 
 if test $FAILED -ne 0; then
