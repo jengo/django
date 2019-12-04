@@ -16,3 +16,4 @@
       MYSQL_PASSWORD: ${DB_PASSWORD}
 volumes:
   mysql_data:
+  static:

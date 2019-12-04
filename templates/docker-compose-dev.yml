@@ -3,7 +3,7 @@
 # Everything is inside the container as it will go to production
 # .dockerignore will be processed as expected
 
-# Dev mode will still add the files, however `pwd` is connected to /usr/src/app
+# Dev mode will still add the files, however `pwd` is connected to /app
 # Changes to the local files will appear in the container
 # The container will be started with the CMD of bash, so it runs without any app running
 # Nginx will display gateway down until django is running
@@ -19,7 +19,8 @@ services:
     networks:
       - jengo_django
     volumes:
-      - .:/usr/src/app
+      - .:/app
+      - static:/static
     # Allows running container in dev mode, which loads using bash instead of manage.py
     # Exceptions during development won't require rebuilding the containers
     stdin_open: true

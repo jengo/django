@@ -12,3 +12,7 @@ DB_PORT=3306
 DB_PASSWORD=changeme
 DB_NAME=jengo_django
 DB_USER=jengo_django
+
+# Only used in local dev with "make create_admin"
+DJANGO_ADMIN_USER=jengo_django
+DJANGO_ADMIN_PASSWORD=changeme

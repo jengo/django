@@ -7,7 +7,7 @@
 # - Build container with volume linked to build/$PROJECT and templates directory. That container will be used to setup all the required files.
 # - Once build is complete, temp build container is destoryed and new project is brought up in dev mode.
 
-PROJECT?=jengo_django
+PROJECT?=jengo_django_sampleoutput
 DATABASE_TYPE?=mysql
 # Set this value if you want to push the sample code to an origin
 # Jolene will be using this to test CI for the boilerplate output
@@ -22,15 +22,26 @@ all: clean depends test
 
 clean:
 # If they aren't found, don't error out
+	-docker-compose stop
 	-docker-compose rm -f
-# TODO! Throw an error if the build has already been created.  This will help prevent accidents
-	rm -fr build
+# If there was a previous build, stop those containers as well
+	-cd build && docker-compose stop
+	-cd build && docker-compose rm -f
 
 depends:
 	mkdir -p build
 	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
-	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /usr/src/app'
-	docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /usr/src/app'
+	docker-compose exec buildtmp sh -c 'scripts/create.sh'
+	# docker-compose stop
+	cd build && make
+
+# TODO! REMOVE
+depends_org:
+	mkdir -p build
+	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /app'
+	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /app'
+	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.dockerignore /app'
 	# cp templates/env_${DATABASE_TYPE} build/.env
 # Name is different because it should NOT be used for the repo it self
 # It's only a template
@@ -57,5 +68,17 @@ shell:
 	docker-compose exec buildtmp bash
 
 test:
-	echo "not implemented"
+	scripts/test.sh
 
+# This will be used by CI to update the example repo
+# Replace the initialized .git with django-sampleoutput/.git
+update_sample_repo:
+	rm -fr /tmp/django-sampleoutput/
+	cd /tmp && git clone git@github.com:jengo/django-sampleoutput.git
+	rm -fr build/.git
+	mv /tmp/django-sampleoutput/.git build
+# TODO: Once I add a version number, set it in the message
+# TODO: In CI, use the same branch name
+	cd build && git add -A \
+		&& git commit -m '[updated] To newest version' \
+		&& git push
