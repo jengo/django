@@ -1,2 +1,2 @@
 # Top level needed to just create the django project
-django==2.2
+django==3.0
