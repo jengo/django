@@ -8,9 +8,9 @@
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: jengo_django
-      POSTGRES_USER: jengo_django
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
 volumes:
   postgres_data:
   static:
