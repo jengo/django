@@ -35,6 +35,12 @@ depends:
 	# docker-compose stop
 	cd build && make
 
+# Dependancies for dev only
+# TODO: Document
+# TODO: Finish :P
+depends_dev:
+	pip install pip-upgrader
+
 # TODO! REMOVE
 depends_org:
 	mkdir -p build
@@ -82,3 +88,8 @@ update_sample_repo:
 	cd build && git add -A \
 		&& git commit -m '[updated] To newest version' \
 		&& git push
+
+# TODO: Auto upgrade the Dockerfile to newest
+# These dependancies are pinned in the repo
+upgrade_python:
+	echo "all" | pip-upgrade requirements.txt templates/requirements.txt --skip-virtualenv-check

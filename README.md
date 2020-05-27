@@ -11,6 +11,8 @@ It also contains some helpers for local development, such as [adminer](https://w
 ### Step 1 (optional)
 The first step can be skipped if you are just quickly testing this script and want to see what it generates.
 
+Project name must be a valid Python class name.  Only use characters like a-Z0-9_
+
 Database options are either mysql (default) or postgres.
 
 ```
