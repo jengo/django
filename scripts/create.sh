@@ -29,6 +29,8 @@ cd /app
 python manage.py startapp welcome
 python manage.py startapp healthz
 sed -i "s/PROJECT=jengo_django_sampleoutput/TEST=${PROJECT}/" /app/Makefile
+sed -i "s/jengo_django_sampleoutput.wsgi/${PROJECT}.wsgi/" /app/scripts/run-copy-assets.sh
+sed -i "s/jengo_django_sampleoutput.wsgi/${PROJECT}.wsgi/" /app/scripts/run-no-copy-assets.sh
 
 cd /jengo_django
 
@@ -53,3 +55,4 @@ sed -i "s/]/    path\('healthz', include('healthz.urls')),\n    path\('', includ
 sed -i 's/from django.urls import path/from django.urls import path,include/' /app/${PROJECT}/urls.py
 scripts/update_settings.py -f /app/${PROJECT}/settings.py
 printf "SECRET_KEY=$(openssl rand  -base64 40)\n\n" >> /app/.env
+
