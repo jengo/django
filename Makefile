@@ -65,7 +65,7 @@ sample:
 # Generate the sample output application that will appear at https://github.com/jengo/django-sampleoutput
 	make
 # Using a force push, no reason to deal with conflicts it's just a sample and for testing CI
-	cd build && git remote add origin ${SAMPLE_ORIGIN} && git push origin master -f
+	cd build && git init && git remote add origin ${SAMPLE_ORIGIN} && git push origin main -f
 
 
 shell:
@@ -86,7 +86,7 @@ update_sample_repo:
 # TODO: Once I add a version number, set it in the message
 # TODO: In CI, use the same branch name
 	cd build && git add -A \
-		&& git commit -m '[updated] To newest version' \
+		&& git commit -m 'feat: Newest version' \
 		&& git push
 
 # TODO: Auto upgrade the Dockerfile to newest
