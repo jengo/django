@@ -37,14 +37,24 @@ DATABASES = {
 }
 """
 
+file_text = args.file.read()
+
 # This regex isn't bullet proof, the format isn't something the django team updates
 # too often
 regex  = r"^DATABASES =((.|\n)*)}$"
-result = re.sub(regex, newdbconfig, args.file.read(), 0, re.MULTILINE)
+file_text = re.sub(regex, newdbconfig, file_text, 0, re.MULTILINE)
+
+
+newimport = """
+from pathlib import Path
+import os
+"""
+import_regex  = r"^from pathlib import Path$"
+file_text        = re.sub(import_regex, newimport, file_text, 0, re.MULTILINE)
 
 if args.dry_run:
-	print(result)
+	print(file_text)
 else:
 	args.file.seek(0)
-	args.file.write(result)
+	args.file.write(file_text)
 	args.file.close()
