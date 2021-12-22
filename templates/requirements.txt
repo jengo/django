@@ -1,4 +1,4 @@
-django==3.1.13
+django==3.1.14
 # You can later remove the database you are not using
 # I wanted to keep the flow simple and not add unnecessary logic
 django_mysql==3.12.0
