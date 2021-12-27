@@ -1,16 +1,17 @@
-django==3.1.14
+django==4.0.0
 # You can later remove the database you are not using
 # I wanted to keep the flow simple and not add unnecessary logic
-django_mysql==3.12.0
-mysqlclient==2.0.3
+django_mysql==4.3.0
+mysqlclient==2.1.0
 django-postgresql==0.0.3
 psycopg2
 django_nose==1.4.7
-arrow==1.1.1
-pytest==6.2.4
-pytest-cov==2.12.1
-coverage2clover==3.2.1
-pylint==2.9.6
+arrow==1.2.1
+pip-upgrader
+pytest==6.2.5
+pytest-cov==3.0.0
+coverage2clover==3.3.0
+pylint==2.12.2
 pyvalid==1.0.4
 pytest-benchmark==3.4.1
 requests==2.26.0

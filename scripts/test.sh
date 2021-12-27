@@ -61,6 +61,16 @@ https_check "/healthz"
 https_check "/static/admin/css/base.css"
 
 
+statuscode=$( curl --silent --output /dev/null --write-out "%{http_code}" --max-time 1 http://localhost/admin/login -X POST -d "username=a&password=b" )
+if test $statuscode -ne 301; then
+	echo "Failed to load admin POST, possible CRSF config issue, expected 301 got $statuscode"
+
+	((FAILED++))
+fi
+
+# Not a pass / fail test, just report any out of date packages
+docker-compose exec django sh -c 'echo q | pip-upgrade --dry-run requirements.txt --skip-virtualenv-check'
+
 if test $FAILED -ne 0; then
 	printf "${RED}\n\n⛔️ Total tests failed: $FAILED!\n${RESET}"
 	exit -1
