@@ -63,3 +63,5 @@ printf "CSRF_TRUSTED_ORIGINS=https://localhost,http://localhost\n\n" >> /app/.en
 # Maybe some day this will allow scripted upgrades
 echo "JENGO_DJANGO_VERSION=\"$( cat VERSION )\"" >> /app/${PROJECT}/__init__.py
 echo "JENGO_DJANGO_DATABASE_TYPE=\"${DATABASE_TYPE}\"" >> /app/${PROJECT}/__init__.py
+
+sed -i "s/'django.contrib.staticfiles',/'django.contrib.staticfiles',\n    'django_grpc_framework',/" /app/${PROJECT}/settings.py
