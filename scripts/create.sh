@@ -50,9 +50,16 @@ fi
 cp templates/env_${DATABASE_TYPE} /app/.env
 printf "\nSTATIC_ROOT=\"/static\"\n" >> /app/${PROJECT}/settings.py
 sed -i 's/SECRET_KEY.*/SECRET_KEY = os.environ.get("SECRET_KEY")/' /app/${PROJECT}/settings.py
+printf "\nCSRF_TRUSTED_ORIGINS = os.environ.get(\"CSRF_TRUSTED_ORIGINS\").split(',')\n" >> /app/${PROJECT}/settings.py
+
 # Add route for healthz
 sed -i "s/]/    path\('healthz', include('healthz.urls')),\n    path\('', include('welcome.urls')), \n]/" /app/${PROJECT}/urls.py
 sed -i 's/from django.urls import path/from django.urls import path,include/' /app/${PROJECT}/urls.py
 scripts/update_settings.py -f /app/${PROJECT}/settings.py
 printf "SECRET_KEY=$(openssl rand  -base64 40)\n\n" >> /app/.env
+printf "CSRF_TRUSTED_ORIGINS=https://localhost,http://localhost\n\n" >> /app/.env
 
+# Add version of jengo/django to the build
+# Maybe some day this will allow scripted upgrades
+echo "JENGO_DJANGO_VERSION=\"$( cat VERSION )\"" >> /app/${PROJECT}/__init__.py
+echo "JENGO_DJANGO_DATABASE_TYPE=\"${DATABASE_TYPE}\"" >> /app/${PROJECT}/__init__.py
