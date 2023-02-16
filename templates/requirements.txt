@@ -9,7 +9,7 @@ django_nose==1.4.7
 arrow==1.2.3
 pip-upgrader
 pytest==7.2.1
-pytest-cov==3.0.0
+pytest-cov==4.0.0
 coverage2clover==3.3.0
 pylint==2.16.2
 pyvalid==1.0.4
