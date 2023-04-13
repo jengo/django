@@ -93,3 +93,8 @@ update_sample_repo:
 # These dependancies are pinned in the repo
 upgrade_python:
 	echo "all" | pip-upgrade requirements.txt templates/requirements.txt --skip-virtualenv-check
+
+# Helper to simplify upgrading packages
+upgrade_packages:
+	pip-upgrade requirements.txt templates/requirements.txt --skip-virtualenv-check
+
