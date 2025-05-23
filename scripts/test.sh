@@ -39,7 +39,7 @@ https_check()
 for container in "${expected_containers[@]}"
 do
 	echo "Verifying container: $container is running"
-	docker-compose ps $container
+	docker compose ps $container
 
 	if test $? -ne 0; then
 		((FAILED++))
@@ -69,7 +69,7 @@ if test $statuscode -ne 301; then
 fi
 
 # Not a pass / fail test, just report any out of date packages
-docker-compose exec django sh -c 'echo q | pip-upgrade --dry-run requirements.txt --skip-virtualenv-check'
+docker compose exec django sh -c 'pip-review'
 
 if test $FAILED -ne 0; then
 	printf "${RED}\n\n⛔️ Total tests failed: $FAILED!\n${RESET}"

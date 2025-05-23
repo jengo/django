@@ -1,4 +1,4 @@
 # Top level needed to just create the django project
-django==4.2.21
+django==5.2
 pip_upgrader==1.4.15
 
