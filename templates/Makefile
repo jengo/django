@@ -19,36 +19,36 @@ NGINX_HTTPS_PORT?=443:443
 
 clean:
 # If they aren't found, don't error out
-	-docker-compose rm -f
+	-docker compose rm -f
 
 include .env
 create_admin:
-	docker-compose exec django python manage.py shell -c \
+	docker compose exec django python manage.py shell -c \
 	 	"from django.contrib.auth import get_user_model; User = get_user_model(); \
 		 User.objects.create_superuser('${DJANGO_ADMIN_USER}', 'admin@example.com', '${DJANGO_ADMIN_PASSWORD}')"
 
 depends:
-	docker-compose up --build -d --remove-orphans
+	docker compose up --build -d --remove-orphans
 
 deploy:
 # This is where you will add commands to push to your docker registry
 	echo "deploy not implemented"
 
 dev:
-	docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	docker compose -f docker-compose.yml -f docker-compose-dev.yml up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
 # Connect to the container after rebuild
 	make shell
 
 shell:
 # Use exec so we are connecting to the exact container running
 # Useful for checking things like the contents of /tmp
-	docker-compose exec django bash
+	docker compose exec django bash
 
 start:
-	docker-compose start
+	docker compose start
 
 stop:
-	docker-compose stop
+	docker compose stop
 
 test:
 	echo "not implemented"

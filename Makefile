@@ -22,17 +22,17 @@ all: clean depends test
 
 clean:
 # If they aren't found, don't error out
-	-docker-compose stop
-	-docker-compose rm -f
+	-docker compose stop
+	-docker compose rm -f
 # If there was a previous build, stop those containers as well
-	-cd build && docker-compose stop
-	-cd build && docker-compose rm -f
+	-cd build && docker compose stop
+	-cd build && docker compose rm -f
 
 depends:
 	mkdir -p build
-	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
-	docker-compose exec buildtmp sh -c 'scripts/create.sh'
-	# docker-compose stop
+	docker compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	docker compose exec buildtmp sh -c 'scripts/create.sh'
+	# docker compose stop
 	cd build && make
 
 # Dependancies for dev only
@@ -44,10 +44,10 @@ depends_dev:
 # TODO! REMOVE
 depends_org:
 	mkdir -p build
-	docker-compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
-	docker-compose exec buildtmp sh -c 'cp -r /tmp/build/* /app'
-	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.env /app'
-	# docker-compose exec buildtmp sh -c 'cp /tmp/build/.dockerignore /app'
+	docker compose up --build -d --remove-orphans ${COMPOSE_BUILD_OPT}
+	dockercompose exec buildtmp sh -c 'cp -r /tmp/build/* /app'
+	# docker compose exec buildtmp sh -c 'cp /tmp/build/.env /app'
+	# docker compose exec buildtmp sh -c 'cp /tmp/build/.dockerignore /app'
 	# cp templates/env_${DATABASE_TYPE} build/.env
 # Name is different because it should NOT be used for the repo it self
 # It's only a template
@@ -58,8 +58,8 @@ depends_org:
 # Now build the newly created project
 	cd build && make
 # Clean up the temp build container
-	-docker-compose stop
-	-docker-compose rm -f
+	-docker compose stop
+	-docker compose rm -f
 
 sample:
 # Generate the sample output application that will appear at https://github.com/jengo/django-sampleoutput
@@ -71,7 +71,7 @@ sample:
 shell:
 # Use exec so we are connecting to the exact container running
 # Useful for checking things like the contents of /tmp
-	docker-compose exec buildtmp bash
+	docker compose exec buildtmp bash
 
 test:
 	scripts/test.sh
